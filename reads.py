@@ -31,12 +31,12 @@ def download_path(document):
        id_list.append(path_list[row].split('/', path_list[row].count('/'))[5])
        
        with open(path, 'w') as files:
-           files.write("Name: " + str(document["Name"][row]) + '\n')
-           files.write("ID: " + str(document["ID"][row]) + '\n')
-           files.write("Date: " + str(document["Date"][row]) + '\n')
-           files.write("Location: " + str(document["Location"][row]) + '\n')
-           files.write("Size: " + str(document["Size"][row]) + '\n')
-           files.write("Owner: " + str(document["Owner"][row]) + '\n')
+           files.write(str(document["Name"][row]) + '\n')
+           files.write(str(document["ID"][row]) + '\n')
+           files.write(str(document["Date"][row]) + '\n')
+           files.write(str(document["Location"][row]) + '\n')
+           files.write(str(document["Size"][row]) + '\n')
+           files.write(str(document["Owner"][row]) + '\n')
            files.close()
     
     for i in range(len(id_list)):
