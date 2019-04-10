@@ -1,53 +1,67 @@
-import os , sys, shutil
+import os, shutil
 
 import pandas as pd
-from pandas import ExcelWriter
-from pandas import ExcelFile
 
-from google_drive_downloader import GoogleDriveDownloader as gdd
+import urllib
 
 def get_docs(document):
-    doc = pd.read_excel(document)
+    doc = pd.read_csv(document)
     
     return doc
     
 def download_path(document):
-    links = document['Path']
+    links1 = document['img_0_link']
+    links2 = document['img_1_link']
     
-    path_list = []
-    id_list = []
+    path_list1 = []
+    path_list2 = []
     
-    for row in links.index:
-       path = "./" + str(document['ID'][row]) + "/Dados.txt"
-       path_list.append(links[row])
+    
+    for row in links1.index:
+       path = "./" + str(document['numero'][row]) + "/Dados.txt"
+       path_list1.append(links1[row])
        
-       if os.path.exists(str(document['ID'][row])):
-           shutil.rmtree(str(document['ID'][row]))
-           os.mkdir(str(document['ID'][row]))
+       if os.path.exists(str(document['numero'][row])):
+           shutil.rmtree(str(document['numero'][row]))
+           os.mkdir(str(document['numero'][row]))
            
        else:    
-           os.mkdir(str(document['ID'][row]))
+           os.mkdir(str(document['numero'][row]))
 
-       id_list.append(path_list[row].split('/', path_list[row].count('/'))[5])
        
-       with open(path, 'w') as files:
-           files.write(str(document["Name"][row]) + '\n')
-           files.write(str(document["ID"][row]) + '\n')
-           files.write(str(document["Date"][row]) + '\n')
-           files.write(str(document["Location"][row]) + '\n')
-           files.write(str(document["Size"][row]) + '\n')
-           files.write(str(document["Owner"][row]) + '\n')
+    for row in links2.index:
+        path = "./" + str(document['numero'][row]) + "/Dados.txt"
+        path_list2.append(links2[row])
+       
+        if os.path.exists(str(document['numero'][row])):
+            shutil.rmtree(str(document['numero'][row]))
+            os.mkdir(str(document['numero'][row]))
+           
+        else:    
+            os.mkdir(str(document['numero'][row]))
+        
+       
+        with open(path, 'w') as files:
+           files.write(str(document["desm_in_sigef_c_area"][row]) + '\n')
+           files.write(str(document["desm_in_sigef_c_perc"][row]) + '\n')
+           files.write(str(document["desmatamento_area"][row]) + '\n')
+           files.write(str(document["img_0_id"][row]) + '\n')
+           files.write(str(document["img_1_id"][row]) + '\n')
+           files.write(str(document["numero"][row]) + '\n')
+           files.write(str(document["sigef_c_ids"][row]) + '\n')
            files.close()
     
-    for i in range(len(id_list)):
-        gdd.download_file_from_google_drive(file_id = id_list[i],
-                                            dest_path = "./" + str(document['ID'][i]) + '/arq' + str(i))
+    for i in links1.index:
+        urllib.request.urlretrieve(links1[i],
+                                   filename = "./" + str(document['numero'][i]) + '/Antes'  + '.png')
+        urllib.request.urlretrieve(links2[i],
+                                   filename = "./" + str(document['numero'][i]) + '/Depois'  + '.png')
         
         
 
 if __name__ == "__main__":
     
-    sheet = get_docs("test.xlsx")
+    sheet = get_docs("dados_16811.csv")
     
     paths = download_path(sheet)
     
