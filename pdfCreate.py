@@ -15,26 +15,27 @@ for i in range(len(folders)):
         
     titulo = 'PRODES' + '-' + d[12]
     
-    titulo_imgs_antes = 'PLANET - ' + d[9] + ' - ' + d[8]
-    titulo_imgs_depois = 'PLANET - ' + d[11] + ' - ' + d[10]
+    titulo_imgs_antes = 'SENTINEL - ' + d[9] + ' - ' + d[8]
+    titulo_imgs_depois = 'SENTINEL - ' + d[11] + ' - ' + d[10]
         
-    territorio_desmatado = "Área desmatada: " + d[7] + 'Km² '
+    territorio_desmatado = d[7] + 'Km² '
     
     if (d[13] == "N/P" or d[13] == "none"):
-        sigef = "SIGEF: " + "N/P*"
+        sigef = "N/P*"
     else:
-        sigef = "SIGEF: " + d[13] + ' - ' + "Área desmatada do Sigef: " + d[4]+ ' - ' + "Porcentagem: " + d[5]
+        sigef = "N°: " + d[13] + '\n' + "Área desmatada do Sigef: " + d[4]+ 'Km² \n' + "Porcentagem: " + d[5]
     
     if (d[14] == "N/P" or d[14] == "none"):
-        regul_sigef = "REGULARIZAÇÃO SIGEF: " + "N/P*"
+        regul_sigef = "N/P*"
     else:
-        regul_sigef = "REGULARIZAÇÃO SIGEF: " + d[14] + ' - ' + "Área desmatada do Sigef: " + d[6]+ ' - ' + "Porcentagem: " + d[7]
+        regul_sigef = "N°: " + d[14] + '\n' + "Área desmatada do Sigef: " + d[6]+ 'Km² \n' + "Porcentagem: " + d[7]
     
     if (d[1] == "N/P" or d[1] == "none"):
-        car = "CAR: " + "N/P*"
+        car = "N/P*"
     else:
-        car = "CAR: " + d[0] + ' - ' + "Área desmatada do CAR: " + d[1]+ ' - ' + "Porcentagem: " + d[2]   
-    snci = "SNCI: N/P*"
+        car = "N°: " + d[0] + '\n' + "Área desmatada do CAR: " + d[1]+ 'Km² \n' + "Porcentagem: " + d[2]   
+        
+    snci = "N/P*"
     
     
     
@@ -54,7 +55,7 @@ for i in range(len(folders)):
     pdf.alias_nb_pages()
     pdf.add_page()
     #Setting Images
-    pdf.set_font('Times', 'b', 12)
+    pdf.set_font('Times', 'b', 10)
     pdf.cell(140, 0,titulo_imgs_antes, align='C')
     pdf.image(path_antes, 20, 30, 120, 100)
     pdf.cell(133, 0,titulo_imgs_depois,align='C')
@@ -66,105 +67,114 @@ for i in range(len(folders)):
     #Território Desmatado
     pdf.set_draw_color(255,0,0)
     pdf.set_line_width(0.6)
-    pdf.cell(5)
+    pdf.cell(50)
     pdf.cell(12, 0, '', 1)
-    pdf.set_font('Times', '', 8)
+    pdf.set_font('Times', '', 10)
     pdf.cell(1)
-    pdf.multi_cell(80, 0, territorio_desmatado, 'R')
+    pdf.multi_cell(80, 0, "ÁREA DESMATADA", 'R')
 
     
     #Sigef
-    if (sigef == "SIGEF: N/P*"):
-        pdf.cell(117)
-        pdf.set_draw_color(0, 255, 0)
-        pdf.set_line_width(0.6)
-        pdf.cell(5)
-    
-        pdf.cell(12, 0, '', 1)
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 0, sigef)
-    else:
-        pdf.cell(107)
-        pdf.set_draw_color(0, 255, 0)
-        pdf.set_line_width(0.6)
-        pdf.cell(5)
-        pdf.cell(12, 5, '', 'T')
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(70, 3, sigef)
+    pdf.cell(117)
+    pdf.set_draw_color(0, 255, 0)
+    pdf.set_line_width(0.6)
+    pdf.cell(5)
+
+    pdf.cell(12, 0, '', 1)
+    pdf.cell(1)
+    pdf.set_font('Times', '', 10)
+    pdf.multi_cell(80, 0, "SIGEF")
     
     #Regularização SIGEF
-    if (regul_sigef == "REGULARIZAÇÃO SIGEF: N/P*"):
-        pdf.cell(210)
-        pdf.set_draw_color(96, 255, 0)
-        pdf.set_line_width(0.6)
-        pdf.cell(5)
-    
-        pdf.cell(12, 0, '', 1)
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 0, regul_sigef)
-    else:
-        pdf.cell(200)
-        pdf.set_draw_color(96, 255, 0)
-        pdf.set_line_width(0.6)
-        pdf.cell(5)
-        pdf.cell(12, 5, '', 'T')
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 3, regul_sigef)
+    pdf.cell(170)
+    pdf.set_draw_color(96, 255, 0)
+    pdf.set_line_width(0.6)
+    pdf.cell(5)
+
+    pdf.cell(12, 0, '', 1)
+    pdf.cell(1)
+    pdf.set_font('Times', '', 10)
+    pdf.multi_cell(80, 0, "REGULARIZAÇÃO SIGEF")
         
     #Line Breaker
-    pdf.ln(7)
+    pdf.ln(13)
     
     #CAR
     pdf.set_draw_color(255, 0, 255)
     pdf.set_line_width(0.6)
-    pdf.cell(5)
-    if (car == "CAR: N/P*"):
-        pdf.cell(12, 0, '', 1)
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 0, car)
-    else:
-        pdf.cell(12, 5, '', 'B')
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 3, car)
+    pdf.cell(50)
+    pdf.cell(12, 0, '', 1)
+    pdf.cell(1)
+    pdf.set_font('Times', '', 10)
+    pdf.multi_cell(80, 0, "CAR")
     
     #SNCI
-    pdf.cell(210)
+    pdf.cell(170)
     pdf.set_draw_color(255, 255, 0)
     pdf.set_line_width(0.6)
     pdf.cell(5)
-    if (snci == "SNCI: N/P*"):
-        pdf.cell(12, 0, '', 1)
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 0, snci)
-    else:
-        pdf.cell(12, 5, '', 'B')
-        pdf.cell(1)
-        pdf.set_font('Times', '', 8)
-        pdf.multi_cell(80, 5, snci)
-        
-    #Line Breaker
+    pdf.cell(12, 0, '', 1)
+    pdf.cell(1)
+    pdf.set_font('Times', '', 10)
+    pdf.multi_cell(80, 0, "SNCI")
+    
+    
+    pdf.image('mpf.png',x=120, y=170 ,w=50, h=30)
+    
+    pdf.add_page(orientation='L')
+    
+    pdf.cell(12)
+    pdf.set_draw_color(0, 0, 0)
+    pdf.set_fill_color(255,0,0)
+    pdf.set_font('Times', 'b', 14)
+    pdf.cell(250, 10, "Área desmatada", 1, align='C', fill=True)
+    pdf.set_font('Times', '', 12)
+    pdf.ln(10)
+    pdf.cell(12)
+    pdf.multi_cell(250, 8, territorio_desmatado, 1, align='C')
+    
     pdf.ln(5)
-    pdf.cell(115)
-    pdf.set_font('Times', '', 8)
-    pdf.multi_cell(43.49, 3, 'Sistema de coordenadas geodésico Datum Horizontal: WGS-84 Cálculo da Área: Projeção Sinusoidal', align='C')
     
+    pdf.cell(12)
+    pdf.set_fill_color(0, 255, 0)
+    pdf.set_font('Times', 'b', 14)
+    pdf.cell(250, 10, "SIGEF", 1, align='C', fill=True)
+    pdf.set_font('Times', '', 12)
+    pdf.ln(10)
+    pdf.cell(12)
+    pdf.multi_cell(250, 8, sigef, 1, align='C')
     
-    #Default Author
-    pdf.set_font('Times', 'B', 10)
-    pdf.cell(123)
-    pdf.cell(30, 10, 'Elaborado por:', align='C')
+    pdf.ln(5)
     
-    #Line Breaker
-    pdf.ln(25)
+    pdf.cell(12)
+    pdf.set_font('Times', 'b', 14)
+    pdf.set_fill_color(96, 255, 0)
+    pdf.cell(250, 10, "REGULARIZAÇÃO SIGEF", 1, align='C', fill=True)
+    pdf.set_font('Times', '', 12)
+    pdf.ln(10)
+    pdf.cell(12)
+    pdf.multi_cell(250, 8, regul_sigef, 1, align='C')
     
+    pdf.ln(5)
     
-    pdf.image('mpf.png',x=133, y=182 ,w=27, h=10)
+    pdf.cell(12)
+    pdf.set_font('Times', 'b', 14)
+    pdf.set_fill_color(255, 0, 255)
+    pdf.cell(250, 10, "CAR", 1, align='C', fill=True)
+    pdf.set_font('Times', '', 12)
+    pdf.ln(10)
+    pdf.cell(12)
+    pdf.multi_cell(250, 8, car, 1, align='C')
+    
+    pdf.ln(5)
+    
+    pdf.cell(12)
+    pdf.set_font('Times', 'b', 14)
+    pdf.set_fill_color(255, 255, 0)
+    pdf.cell(250, 10, "SNCI", 1, align='C', fill=True)
+    pdf.set_font('Times', '', 12)
+    pdf.ln(10)
+    pdf.cell(12)
+    pdf.multi_cell(250, 8, snci, 1, align='C')
     
     pdf.output(path_relatorio)
