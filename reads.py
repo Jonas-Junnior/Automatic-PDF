@@ -43,12 +43,18 @@ def download_path(document):
        
         with open(path, 'w') as files:
            files.write(str(document["car_ids"][row]) + '\n')
-           files.write(str(document["desm_in_car_area,"][row]) + '\n')
+           files.write(str(document["desm_in_car_area"][row]) + '\n')
            files.write(str(document["desm_in_car_perc"][row]) + '\n')
-           files.write(str(document["desm_in_sigef_c_area,"][row]) + '\n')
+           files.write(str(document["desm_in_sigef_c_area"][row]) + '\n')
            files.write(str(document["desm_in_sigef_c_perc"][row]) + '\n')
-           files.write(str(document["desm_in_sigef_r_area,"][row]) + '\n')
+           files.write(str(document["desm_in_sigef_r_area"][row]) + '\n')
            files.write(str(document["desm_in_sigef_r_perc"][row]) + '\n')
+           files.write(str(document["desm_in_snci_area"][row]) + '\n')
+           files.write(str(document["desm_in_snci_perc"][row]) + '\n')
+           files.write(str(document["desm_in_ti_uc_area"][row]) + '\n')
+           files.write(str(document["desm_in_ti_uc_perc"][row]) + '\n')
+           files.write(str(document["desm_in_tl_area"][row]) + '\n')
+           files.write(str(document["desm_in_tl_perc"][row]) + '\n')
            files.write(str(document["desmatamento_area"][row]) + '\n')
            files.write(str(document["img_0_date"][row]) + '\n')
            files.write(str(document["img_0_id"][row]) + '\n')
@@ -57,6 +63,12 @@ def download_path(document):
            files.write(str(document["numero"][row]) + '\n')
            files.write(str(document["sigef_c_ids"][row]) + '\n')
            files.write(str(document["sigef_r_ids"][row]) + '\n')
+           files.write(str(document["snci_ids"][row]) + '\n')
+           files.write(str(document["ti_uc_ids"][row]) + '\n')
+           files.write(str(document["tl_ids"][row]) + '\n')
+           files.write(str(document["desm_in_embargo_area"][row]) + '\n')
+           files.write(str(document["desm_in_embargo_perc"][row]) + '\n')
+           files.write(str(document["embargo_ids"][row]) + '\n')
            files.close()
     
     for i in links1.index:
@@ -69,7 +81,7 @@ def download_path(document):
 
 if __name__ == "__main__":
     
-    sheet = get_docs("dados_1071.csv")
+    sheet = get_docs("dados_12130.csv")
     
     paths = download_path(sheet)
     
